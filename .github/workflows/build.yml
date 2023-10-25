@@ -19,3 +19,30 @@ jobs:
       - name: Build
         run: ./mvnw clean package spring-boot:repackage
 
+      - name: Upload JAR
+        uses: actions/upload-artifact@v2
+        with:
+          name: app
+          path: target/jwt-auth-service-1.0.0.jar
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download JAR
+        uses: actions/download-artifact@v2
+        with:
+          name: app
+          path: target/
+
+      - name: Run JAR
+        run: java -jar target/jwt-auth-service-1.0.0.jar
+
+
+
+
+
+
+
+
